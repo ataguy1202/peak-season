@@ -27,13 +27,15 @@ type OverpassEl = {
 
 async function queryOverpass(q: string): Promise<OverpassEl[]> {
   let lastErr: unknown = null;
-  for (const url of OVERPASS_MIRRORS) {
+  // Free-tier serverless functions cap at ~10s total, so each mirror gets a
+  // tight budget and we try at most two before giving up gracefully.
+  for (const url of OVERPASS_MIRRORS.slice(0, 2)) {
     try {
       const res = await fetch(url, {
         method: "POST",
         headers: { "User-Agent": UA, "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({ data: q }).toString(),
-        signal: AbortSignal.timeout(15000),
+        signal: AbortSignal.timeout(6500),
       });
       if (!res.ok) {
         lastErr = new Error(`Overpass ${res.status}`);
@@ -51,7 +53,7 @@ async function queryOverpass(q: string): Promise<OverpassEl[]> {
 
 export async function findMarkets(loc: Location, radiusM = 25000): Promise<Market[]> {
   const q =
-    `[out:json][timeout:20];(` +
+    `[out:json][timeout:8];(` +
     `node["amenity"="marketplace"](around:${radiusM},${loc.lat},${loc.lng});` +
     `way["amenity"="marketplace"](around:${radiusM},${loc.lat},${loc.lng});` +
     `);out center 40;`;

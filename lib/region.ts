@@ -23,7 +23,7 @@ export async function resolveZip(zip: string): Promise<Location | null> {
   const z = zip.trim().match(/\b(\d{5})\b/)?.[1];
   if (!z) return null;
   try {
-    const res = await fetch(`${ZIP_URL}/${z}`, { signal: AbortSignal.timeout(6000) });
+    const res = await fetch(`${ZIP_URL}/${z}`, { signal: AbortSignal.timeout(4000) });
     if (!res.ok) return null;
     const data = await res.json();
     const place = data?.places?.[0];
