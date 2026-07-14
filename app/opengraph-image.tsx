@@ -18,8 +18,9 @@ export default function OG() {
         <div style={{ fontSize: 26, letterSpacing: 6, textTransform: "uppercase", color: "#3a7a2f", marginBottom: 20 }}>
           Free · local food finder
         </div>
-        <div style={{ fontSize: 96, fontWeight: 700, color: "#1c2a17", lineHeight: 1.02, letterSpacing: -2 }}>
-          Eat what's <span style={{ color: "#d98324" }}>ripe.</span>
+        <div style={{ display: "flex", fontSize: 96, fontWeight: 700, color: "#1c2a17", lineHeight: 1.02, letterSpacing: -2 }}>
+          <span>Eat what's&nbsp;</span>
+          <span style={{ color: "#d98324" }}>ripe.</span>
         </div>
         <div style={{ fontSize: 32, color: "#3c4a34", marginTop: 30, maxWidth: 940, lineHeight: 1.3 }}>
           What's in season near you right now, and the farmers markets nearby. Fresher, cheaper, and
